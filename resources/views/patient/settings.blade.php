@@ -1,6 +1,10 @@
 @extends('layouts.patient')
 
 @section('patient_content')
+<div class="page-header">
+    <h1>Paramètres</h1>
+    <p class="lead">Gérez vos paramètres</p>
+</div>
 <div class="container py-4">
     <div class="row mb-4">
         <!-- Section Profil et Photo -->
@@ -60,50 +64,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Données Médicales -->
-                    <div class="medical-info-section">
-                        <h6 class="text-primary mb-3"><i class="fas fa-heartbeat me-2"></i>Données Médicales</h6>
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <div class="info-item">
-                                    <label class="text-muted">Groupe Sanguin</label>
-                                    <p class="mb-2">{{ Auth::user()->groupe_sanguin ?? 'Non renseigné' }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="info-item">
-                                    <label class="text-muted">Taille</label>
-                                    <p class="mb-2">{{ Auth::user()->taille ? Auth::user()->taille . ' cm' : 'Non renseigné' }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="info-item">
-                                    <label class="text-muted">Poids</label>
-                                    <p class="mb-2">{{ Auth::user()->poids ? Auth::user()->poids . ' kg' : 'Non renseigné' }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="info-item">
-                                    <label class="text-muted">Allergies</label>
-                                    <p class="mb-2">{{ Auth::user()->allergies ?? 'Aucune allergie connue' }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="info-item">
-                                    <label class="text-muted">Maladies Chroniques</label>
-                                    <p class="mb-2">{{ Auth::user()->maladies_chroniques ?? 'Aucune maladie chronique' }}</p>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="info-item">
-                                    <label class="text-muted">Antécédents Médicaux</label>
-                                    <p class="mb-2">{{ Auth::user()->antecedents ?? 'Aucun antécédent médical' }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -161,7 +121,7 @@
 
     <!-- Section Notifications -->
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-12">
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="section-title">
@@ -309,18 +269,7 @@ document.getElementById('photoInput').addEventListener('change', function(e) {
                 form.classList.add('was-validated');
             }, false);
         });
-
-        // Prévisualisation de la photo
-        document.getElementById('photo').addEventListener('change', function(e) {
-            if (e.target.files && e.target.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelector('.profile-photo-circle img').src = e.target.result;
-                }
-                reader.readAsDataURL(e.target.files[0]);
-            }
-        });
-    })();
+    });
 </script>
 @endpush
 

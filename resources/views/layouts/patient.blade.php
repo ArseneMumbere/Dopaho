@@ -14,29 +14,6 @@
             <i class="fas fa-heartbeat"></i> Dopaho
         </a>
 
-        <!-- User Info -->
-        <div class="user-info mb-4 text-center">
-            <div class="user-avatar mb-2">
-                <img src="{{ Auth::user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->nom . ' ' . Auth::user()->prenom) }}" 
-                     class="rounded-circle" 
-                     style="width: 80px; height: 80px; object-fit: cover;"
-                     alt="Photo de profil">
-            </div>
-            <div class="user-name">
-                {{ Auth::user()->prenom }} {{ Auth::user()->nom }}
-            </div>
-        </div>
-
-        <!-- Bouton Premium -->
-        @if(!auth()->user()->isPremium())
-        <a href="{{ route('subscription.premium') }}" class="btn btn-warning mb-4">
-            <i class="fas fa-crown me-2"></i>Passer à Premium
-            <div class="premium-price mt-1">
-                <small>Seulement $2.99/mois</small>
-            </div>
-        </a>
-        @endif
-
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('patient.home') ? 'active' : '' }}" href="{{ route('patient.home') }}">
@@ -45,7 +22,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('patient.appointments') ? 'active' : '' }}" href="{{ route('patient.appointments') }}">
-                    <i class="fas fa-calendar-check"></i> Prendre rendez-vous
+                    <i class="fas fa-calendar-check"></i> Rendez-vous
                 </a>
             </li>
             <li class="nav-item">
@@ -98,7 +75,9 @@
     <!-- Main Content -->
     <div class="main-content">
         <div class="container">
-
+            @if(!auth()->user()->isPremium())
+                <x-premium-alert />
+            @endif
             @yield('patient_content')
         </div>
     </div>

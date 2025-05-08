@@ -15,6 +15,7 @@
                     </div>
 
                     <div class="notifications-list">
+                    <div id="payment-notification-area" class="alert alert-success" style="display: none; margin-bottom: 1rem;"></div>
                         <!-- Notification non lue -->
                         <div class="notification-item unread">
                             <div class="notification-icon bg-primary">
@@ -120,6 +121,48 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const paymentNotification = sessionStorage.getItem('paymentNotification');
+    if (paymentNotification) {
+        const notificationArea = document.getElementById('payment-notification-area');
+        if (notificationArea) {
+            // Créer une structure HTML similaire aux autres notifications
+            notificationArea.innerHTML = `
+                <div class="notification-icon bg-success">
+                    <i class="fas fa-check-circle"></i> <!-- Icône de succès -->
+                </div>
+                <div class="notification-content">
+                    <h6>Paiement Réussi</h6>
+                    <p>${paymentNotification}</p>
+                    <small class="text-muted">À l'instant</small>
+                </div>
+                <div class="notification-actions">
+                    <!-- Peut-être un bouton pour la masquer si besoin -->
+                </div>
+            `;
+            notificationArea.className = 'notification-item unread'; // Appliquer les mêmes classes
+            notificationArea.style.display = 'flex'; // S'assurer qu'elle s'affiche comme les autres (flex)
+            
+            // Clignotement pour attirer l'attention
+            let count = 0;
+            const interval = setInterval(function() {
+                notificationArea.style.backgroundColor = count % 2 === 0 ? '#e6ffed' : '#d4edda'; // Alternance de verts plus doux, adapté au style .unread
+                count++;
+                if (count > 5) { // Clignote 3 fois (6 changements)
+                    clearInterval(interval);
+                    notificationArea.style.backgroundColor = ''; // Retour au fond par défaut pour .unread ou .notification-item:hover
+                }
+            }, 500);
+        }
+        sessionStorage.removeItem('paymentNotification');
+    }
+});
+</script>
+@endpush
+
 
 @push('styles')
 <style>
